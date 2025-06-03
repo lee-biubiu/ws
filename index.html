@@ -47,15 +47,17 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); /* 屏幕中心定位 */
-            font-family: 'Orbitron', sans-serif; /* 更具科技感的字体 */
-            font-size: 8vw; /* 基于视口宽度的动态字体大小（8%屏幕宽度） */
-            color: #0ff; /* 青色霓虹效果 */
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 8vw;
+            color: #fff; /* 改为白色主色，与星星颜色统一 */
             background: rgba(0, 0, 0, 0.8);
-            padding: 2vh 4vw; /* 垂直/水平内边距基于视口 */
+            padding: 2vh 4vw;
             border-radius: 12px;
             z-index: 100;
-            text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; /* 霓虹发光效果 */
+            text-shadow: 0 0 8px rgba(135, 206, 250, 0.8),  /* 淡蓝色渐变阴影（天空蓝） */
+                         0 0 16px rgba(135, 206, 250, 0.6),
+                         0 0 24px rgba(135, 206, 250, 0.4); /* 多层阴影增强空间感 */
         }
 
         @keyframes twinkle {
