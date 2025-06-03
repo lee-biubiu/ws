@@ -41,6 +41,21 @@
             animation: meteor 3s linear;
         }
 
+        /* 新增数码时钟样式 */
+        .digital-clock {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            color: #0f0; /* 绿色数码管效果 */
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 6px;
+            z-index: 100; /* 确保显示在星星上层 */
+        }
+
         @keyframes twinkle {
             0%, 100% { opacity: 0.3; transform: scale(0.8); }
             50% { opacity: 1; transform: scale(1.2); }
@@ -53,6 +68,8 @@
     </style>
 </head>
 <body>
+    <!-- 新增数码时钟容器 -->
+    <div class="digital-clock" id="digitalClock"></div>
     <div class="stars-container" id="starsContainer"></div>
 
     <script>
@@ -135,6 +152,21 @@
                 setTimeout(() => spark.remove(), 500);
             }, 100);
         });
+
+        // 新增：实时更新时间函数
+        function updateTime() {
+            const now = new Date();
+            // 补零处理
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            // 更新显示内容
+            document.getElementById('digitalClock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // 初始化时间显示并启动定时器
+        updateTime();
+        setInterval(updateTime, 1000); // 每秒更新一次
     </script>
 </body>
 </html>
