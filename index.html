@@ -115,36 +115,42 @@
             // 随机选择起始方向（四个边界）
             const directions = ['top', 'right', 'bottom', 'left'];
             const direction = directions[Math.floor(Math.random() * directions.length)];
-            let startX, startY, endTranslate;
+            let startX, startY, endTranslate, gradientAngle; // 新增渐变角度变量
         
-            // 根据方向计算起始位置和结束偏移量
+            // 根据方向计算起始位置、结束偏移量和渐变角度
             switch (direction) {
-                case 'top': // 顶部边界向下划
+                case 'top': // 顶部边界向下划（运动方向：下）
                     startX = Math.random() * 100 + 'vw';
-                    startY = Math.random() * 10 + 'vh'; // 顶部10%区域
-                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, 100vh)`; // 随机左右偏移+向下
+                    startY = Math.random() * 10 + 'vh';
+                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, 100vh)`;
+                    gradientAngle = 0; // 渐变方向：上→下（拖影在上方，与运动方向相反）
                     break;
-                case 'right': // 右侧边界向左划
-                    startX = Math.random() * 10 + 90 + 'vw'; // 右侧10%区域
+                case 'right': // 右侧边界向左划（运动方向：左）
+                    startX = Math.random() * 10 + 90 + 'vw';
                     startY = Math.random() * 100 + 'vh';
-                    endTranslate = `translate(-100vw, ${(Math.random() - 0.5) * 30}vh)`; // 随机上下偏移+向左
+                    endTranslate = `translate(-100vw, ${(Math.random() - 0.5) * 30}vh)`;
+                    gradientAngle = -90; // 渐变方向：右→左（拖影在右侧，与运动方向相反）
                     break;
-                case 'bottom': // 底部边界向上划
+                case 'bottom': // 底部边界向上划（运动方向：上）
                     startX = Math.random() * 100 + 'vw';
-                    startY = Math.random() * 10 + 90 + 'vh'; // 底部10%区域
-                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, -100vh)`; // 随机左右偏移+向上
+                    startY = Math.random() * 10 + 90 + 'vh';
+                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, -100vh)`;
+                    gradientAngle = 180; // 渐变方向：下→上（拖影在下方，与运动方向相反）
                     break;
-                case 'left': // 左侧边界向右划
-                    startX = Math.random() * 10 + 'vw'; // 左侧10%区域
+                case 'left': // 左侧边界向右划（运动方向：右）
+                    startX = Math.random() * 10 + 'vw';
                     startY = Math.random() * 100 + 'vh';
-                    endTranslate = `translate(100vw, ${(Math.random() - 0.5) * 30}vh)`; // 随机上下偏移+向右
+                    endTranslate = `translate(100vw, ${(Math.random() - 0.5) * 30}vh)`;
+                    gradientAngle = 90; // 渐变方向：左→右（拖影在左侧，与运动方向相反）
                     break;
             }
         
+            // 动态设置流星的渐变方向
             meteor.style.cssText = `
                 left: ${startX};
                 top: ${startY};
-                animation: meteor-custom 3s linear;
+                background: linear-gradient(${gradientAngle}deg, #fff, transparent);
+                animation: ${animationName} 3s linear;
             `;
         
             // 动态创建专属动画（避免全局动画覆盖）
