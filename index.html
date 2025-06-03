@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>宇宙星空page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>宇宙星空</title>
     <style>
         * {
             margin: 0;
@@ -41,19 +42,20 @@
             animation: meteor 3s linear;
         }
 
-        /* 新增数码时钟样式 */
+        /* 调整后的数码时钟样式 */
         .digital-clock {
             position: fixed;
-            top: 20px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Courier New', monospace;
-            font-size: 24px;
-            color: #0f0; /* 绿色数码管效果 */
-            background: rgba(0, 0, 0, 0.7);
-            padding: 8px 16px;
-            border-radius: 6px;
-            z-index: 100; /* 确保显示在星星上层 */
+            transform: translate(-50%, -50%); /* 屏幕中心定位 */
+            font-family: 'Orbitron', sans-serif; /* 更具科技感的字体 */
+            font-size: 8vw; /* 基于视口宽度的动态字体大小（8%屏幕宽度） */
+            color: #0ff; /* 青色霓虹效果 */
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2vh 4vw; /* 垂直/水平内边距基于视口 */
+            border-radius: 12px;
+            z-index: 100;
+            text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; /* 霓虹发光效果 */
         }
 
         @keyframes twinkle {
