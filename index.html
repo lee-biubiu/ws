@@ -107,7 +107,7 @@
             container.appendChild(star);
         }
 
-        // 生成流星（修改后）
+        // 生成流星（修复后）
         function createMeteor() {
             const meteor = document.createElement('div');
             meteor.className = 'meteor';
@@ -115,40 +115,48 @@
             // 随机选择起始方向（四个边界）
             const directions = ['top', 'right', 'bottom', 'left'];
             const direction = directions[Math.floor(Math.random() * directions.length)];
-            let startX, startY, endTranslate;
+            let startX, startY, endTranslate, gradientAngle;
         
-            // 根据方向计算起始位置和结束偏移量
+            // 根据方向计算起始位置、结束偏移量和渐变角度
             switch (direction) {
-                case 'top': // 顶部边界向下划
+                case 'top': 
                     startX = Math.random() * 100 + 'vw';
-                    startY = Math.random() * 10 + 'vh'; // 顶部10%区域
-                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, 100vh)`; // 随机左右偏移+向下
+                    startY = Math.random() * 10 + 'vh';
+                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, 100vh)`;
+                    gradientAngle = 0; 
                     break;
-                case 'right': // 右侧边界向左划
-                    startX = Math.random() * 10 + 90 + 'vw'; // 右侧10%区域
+                case 'right': 
+                    startX = Math.random() * 10 + 90 + 'vw';
                     startY = Math.random() * 100 + 'vh';
-                    endTranslate = `translate(-100vw, ${(Math.random() - 0.5) * 30}vh)`; // 随机上下偏移+向左
+                    endTranslate = `translate(-100vw, ${(Math.random() - 0.5) * 30}vh)`;
+                    gradientAngle = -90; 
                     break;
-                case 'bottom': // 底部边界向上划
+                case 'bottom': 
                     startX = Math.random() * 100 + 'vw';
-                    startY = Math.random() * 10 + 90 + 'vh'; // 底部10%区域
-                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, -100vh)`; // 随机左右偏移+向上
+                    startY = Math.random() * 10 + 90 + 'vh';
+                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, -100vh)`;
+                    gradientAngle = 180; 
                     break;
-                case 'left': // 左侧边界向右划
-                    startX = Math.random() * 10 + 'vw'; // 左侧10%区域
+                case 'left': 
+                    startX = Math.random() * 10 + 'vw';
                     startY = Math.random() * 100 + 'vh';
-                    endTranslate = `translate(100vw, ${(Math.random() - 0.5) * 30}vh)`; // 随机上下偏移+向右
+                    endTranslate = `translate(100vw, ${(Math.random() - 0.5) * 30}vh)`;
+                    gradientAngle = 90; 
                     break;
             }
         
+            // 先声明动画名称
+            const animationName = `meteor-${Date.now()}`;  // 调整顺序：先声明animationName
+        
+            // 动态设置流星的样式（包含正确的animationName）
             meteor.style.cssText = `
                 left: ${startX};
                 top: ${startY};
-                animation: meteor-custom 3s linear;
+                background: linear-gradient(${gradientAngle}deg, #fff, transparent);
+                animation: ${animationName} 3s linear;  // 现在使用已声明的animationName
             `;
         
-            // 动态创建专属动画（避免全局动画覆盖）
-            const animationName = `meteor-${Date.now()}`;
+            // 动态创建专属动画
             const style = document.createElement('style');
             style.textContent = `
                 @keyframes ${animationName} {
@@ -157,7 +165,6 @@
                 }
             `;
             document.head.appendChild(style);
-            meteor.style.animationName = animationName;
         
             // 清理动画资源
             meteor.addEventListener('animationend', () => {
