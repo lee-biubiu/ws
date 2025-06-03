@@ -115,45 +115,36 @@
             // 随机选择起始方向（四个边界）
             const directions = ['top', 'right', 'bottom', 'left'];
             const direction = directions[Math.floor(Math.random() * directions.length)];
-            let startX, startY, endTranslate, gradientAngle;
+            let startX, startY, endTranslate;
         
             // 根据方向计算起始位置、结束偏移量和渐变角度
             switch (direction) {
-                case 'top': 
+                case 'top': // 顶部边界向下划
                     startX = Math.random() * 100 + 'vw';
-                    startY = Math.random() * 10 + 'vh';
-                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, 100vh)`;
-                    gradientAngle = 0; 
+                    startY = Math.random() * 10 + 'vh'; // 顶部10%区域
+                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, 100vh)`; // 随机左右偏移+向下
                     break;
-                case 'right': 
-                    startX = Math.random() * 10 + 90 + 'vw';
+                case 'right': // 右侧边界向左划
+                    startX = Math.random() * 10 + 90 + 'vw'; // 右侧10%区域
                     startY = Math.random() * 100 + 'vh';
-                    endTranslate = `translate(-100vw, ${(Math.random() - 0.5) * 30}vh)`;
-                    gradientAngle = -90; 
+                    endTranslate = `translate(-100vw, ${(Math.random() - 0.5) * 30}vh)`; // 随机上下偏移+向左
                     break;
-                case 'bottom': 
+                case 'bottom': // 底部边界向上划
                     startX = Math.random() * 100 + 'vw';
-                    startY = Math.random() * 10 + 90 + 'vh';
-                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, -100vh)`;
-                    gradientAngle = 180; 
+                    startY = Math.random() * 10 + 90 + 'vh'; // 底部10%区域
+                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, -100vh)`; // 随机左右偏移+向上
                     break;
-                case 'left': 
-                    startX = Math.random() * 10 + 'vw';
+                case 'left': // 左侧边界向右划
+                    startX = Math.random() * 10 + 'vw'; // 左侧10%区域
                     startY = Math.random() * 100 + 'vh';
-                    endTranslate = `translate(100vw, ${(Math.random() - 0.5) * 30}vh)`;
-                    gradientAngle = 90; 
+                    endTranslate = `translate(100vw, ${(Math.random() - 0.5) * 30}vh)`; // 随机上下偏移+向右
                     break;
             }
         
-            // 先声明动画名称
-            const animationName = `meteor-${Date.now()}`;  // 调整顺序：先声明animationName
-        
-            // 动态设置流星的样式（包含正确的animationName）
             meteor.style.cssText = `
                 left: ${startX};
                 top: ${startY};
-                background: linear-gradient(${gradientAngle}deg, #fff, transparent);
-                animation: ${animationName} 3s linear;  // 现在使用已声明的animationName
+                animation: meteor-custom 3s linear;
             `;
         
             // 动态创建专属动画
