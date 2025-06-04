@@ -108,7 +108,7 @@
         }
 
         // 生成流星（优化后）
-        // 生成流星（修复尾迹方向）
+        // 生成流星（修复纵向尾迹方向）
         function createMeteor() {
             const meteor = document.createElement('div');
             meteor.className = 'meteor';
@@ -125,25 +125,25 @@
                     startX = Math.random() * 100 + 'vw';
                     startY = Math.random() * 10 + 'vh';
                     endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, 100vh)`;
-                    gradientAngle = 0;  // 渐变方向：下→上（尾迹在上方，垂直向上）
+                    gradientAngle = 180;  // 修正：渐变方向上→下（尾迹在上方）
                     break;
                 case 'right': // 向左运动（从右侧出发）
                     startX = Math.random() * 10 + 90 + 'vw';
                     startY = Math.random() * 100 + 'vh';
                     endTranslate = `translate(-100vw, ${(Math.random() - 0.5) * 30}vh)`;
-                    gradientAngle = 90;  // 渐变方向：左→右（尾迹在右侧，水平向右）
+                    gradientAngle = 90;  // 水平方向保持不变（尾迹在右侧）
                     break;
                 case 'bottom': // 向上运动（从底部出发）
                     startX = Math.random() * 100 + 'vw';
                     startY = Math.random() * 10 + 90 + 'vh';
                     endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, -100vh)`;
-                    gradientAngle = 180;  // 渐变方向：上→下（尾迹在下方，垂直向下）
+                    gradientAngle = 0;  // 修正：渐变方向下→上（尾迹在下方）
                     break;
                 case 'left': // 向右运动（从左侧出发）
                     startX = Math.random() * 10 + 'vw';
                     startY = Math.random() * 100 + 'vh';
                     endTranslate = `translate(100vw, ${(Math.random() - 0.5) * 30}vh)`;
-                    gradientAngle = 270;  // 渐变方向：右→左（尾迹在左侧，水平向左）
+                    gradientAngle = 270;  // 水平方向保持不变（尾迹在左侧）
                     break;
             }
         
