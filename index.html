@@ -51,21 +51,19 @@
             font-size: 8vw;
             color: #fff;
             background: rgba(0, 0, 0, 0);
-            padding: 2vh 4vw;
+            padding: 2vh 1vw; /* 减少左右内边距，避免影响居中 */
             border-radius: 12px;
             z-index: 100;
             text-shadow: 0 0 8px rgba(135, 206, 250, 0.8),
                         0 0 16px rgba(135, 206, 250, 0.6),
                         0 0 24px rgba(135, 206, 250, 0.4);
-            width: 8ch; /* 固定宽度为8个字符宽度（对应HH:MM:SS） */
-            min-width: 8ch; /* 防止内容过宽时收缩 */
+            width: 8ch; /* 固定为8个字符宽度 */
+            min-width: 8ch;
             text-align: center;
-            font-variant-numeric: tabular-nums; /* 标准属性 */
-            -webkit-font-variant-numeric: tabular-nums; /* Safari等浏览器前缀 */
+            font-variant-numeric: tabular-nums;
+            -webkit-font-variant-numeric: tabular-nums;
             white-space: nowrap;
-            /* 强制冒号与数字同宽 */
-            --colon-width: 1ch;
-            letter-spacing: calc(var(--colon-width) - 0.5ch); /* 调整冒号间距 */
+            box-sizing: border-box; /* 确保内边距包含在width内 */
         }
 
         @keyframes twinkle {
