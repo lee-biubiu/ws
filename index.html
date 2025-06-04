@@ -109,52 +109,33 @@
 
         // 生成流星（优化后）
         // 生成流星（深度优化纵向拖影）
+        // 生成流星（仅水平移动）
         function createMeteor() {
             const meteor = document.createElement('div');
             meteor.className = 'meteor';
         
-            const directions = ['top', 'right', 'bottom', 'left'];
+            // 仅保留水平方向（右/左）
+            const directions = ['right', 'left'];
             const direction = directions[Math.floor(Math.random() * directions.length)];
             let startX, startY, endTranslate, gradientAngle;
         
-            // 随机流星基础尺寸（长度80-150px，宽度1-3px）
-            const meteorLength = Math.random() * 70 + 80;  // 主长度（运动方向长度）
-            const meteorThickness = Math.random() * 2 + 1;  // 厚度（垂直运动方向宽度）
+            const meteorLength = Math.random() * 70 + 80;  // 主长度（水平方向长度）
+            const meteorThickness = Math.random() * 2 + 1;  // 厚度（垂直方向宽度）
         
             switch (direction) {
-                case 'top': // 向下运动（从顶部出发）
-                    startX = Math.random() * 100 + 'vw';
-                    startY = Math.random() * 10 + 'vh';
-                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, 100vh)`;
-                    gradientAngle = 0;  // 渐变方向：下→上（尾迹在上方）
-                    // 纵向流星：高度为长度，宽度为厚度（垂直方向长条）
-                    meteor.style.width = `${meteorThickness}px`;
-                    meteor.style.height = `${meteorLength}px`;
-                    break;
                 case 'right': // 向左运动（从右侧出发）
                     startX = Math.random() * 10 + 90 + 'vw';
                     startY = Math.random() * 100 + 'vh';
                     endTranslate = `translate(-100vw, ${(Math.random() - 0.5) * 30}vh)`;
                     gradientAngle = 90;  // 渐变方向：左→右（尾迹在右侧）
-                    // 水平流星：宽度为长度，高度为厚度（水平方向长条）
                     meteor.style.width = `${meteorLength}px`;
                     meteor.style.height = `${meteorThickness}px`;
-                    break;
-                case 'bottom': // 向上运动（从底部出发）
-                    startX = Math.random() * 100 + 'vw';
-                    startY = Math.random() * 10 + 90 + 'vh';
-                    endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, -100vh)`;
-                    gradientAngle = 180;  // 渐变方向：上→下（尾迹在下方）
-                    // 纵向流星：高度为长度，宽度为厚度（垂直方向长条）
-                    meteor.style.width = `${meteorThickness}px`;
-                    meteor.style.height = `${meteorLength}px`;
                     break;
                 case 'left': // 向右运动（从左侧出发）
                     startX = Math.random() * 10 + 'vw';
                     startY = Math.random() * 100 + 'vh';
                     endTranslate = `translate(100vw, ${(Math.random() - 0.5) * 30}vh)`;
                     gradientAngle = 270;  // 渐变方向：右→左（尾迹在左侧）
-                    // 水平流星：宽度为长度，高度为厚度（水平方向长条）
                     meteor.style.width = `${meteorLength}px`;
                     meteor.style.height = `${meteorThickness}px`;
                     break;
@@ -162,39 +143,36 @@
         
             const animationName = `meteor-${Date.now()}`;
         
-            // 动态设置流星样式（优化渐变和方向匹配）
             meteor.style.cssText = `
                 left: ${startX};
                 top: ${startY};
                 background: linear-gradient(${gradientAngle}deg, 
-                    #ffffff 10%,    /* 白色核心 */
-                    #a1e4ff 40%,    /* 淡蓝色过渡 */
-                    transparent 100% /* 透明尾端 */
+                    #ffffff 10%,
+                    #a1e4ff 40%,
+                    transparent 100%
                 );
                 animation: ${animationName} 3s linear;
             `;
         
-            // 优化动画关键帧（保持缩放逻辑）
             const style = document.createElement('style');
             style.textContent = `
                 @keyframes ${animationName} {
                     0% { 
-                        transform: translate(0, 0) scale(${direction.includes('top') || direction.includes('bottom') ? '1, 1' : '1'});  /* 纵向流星保持垂直缩放 */
+                        transform: translate(0, 0) scale(1);
                         opacity: 1;
                     }
                     70% {
-                        transform: ${endTranslate} scale(${direction.includes('top') || direction.includes('bottom') ? '1, 0.8' : '0.8, 1'});  /* 纵向流星垂直收缩 */
+                        transform: ${endTranslate} scale(0.8, 1);
                         opacity: 0.7;
                     }
                     100% { 
-                        transform: ${endTranslate} scale(${direction.includes('top') || direction.includes('bottom') ? '1, 0.2' : '0.2, 1'});  /* 纵向流星垂直消失 */
+                        transform: ${endTranslate} scale(0.2, 1);
                         opacity: 0;
                     }
                 }
             `;
             document.head.appendChild(style);
         
-            // 清理动画资源（保持原逻辑）
             meteor.addEventListener('animationend', () => {
                 meteor.remove();
                 style.remove();
