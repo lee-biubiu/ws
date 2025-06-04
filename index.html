@@ -181,13 +181,34 @@
             container.appendChild(meteor);
         }
 
+        let meteorIntervalId; // 保存流星生成定时器ID
+
         // 初始化星星
         for (let i = 0; i < STAR_COUNT; i++) {
             createStar();
         }
 
-        // 定时生成流星
-        setInterval(createMeteor, METEOR_INTERVAL);
+        // 启动流星生成定时器并保存ID
+        meteorIntervalId = setInterval(createMeteor, METEOR_INTERVAL);
+
+        // 新增：监听页面可见性变化
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                // 后台运行时：暂停生成新流星 + 暂停现有流星动画
+                clearInterval(meteorIntervalId);
+                const meteors = document.getElementsByClassName('meteor');
+                for (const meteor of meteors) {
+                    meteor.style.animationPlayState = 'paused';
+                }
+            } else {
+                // 前台运行时：恢复生成新流星 + 恢复现有流星动画
+                meteorIntervalId = setInterval(createMeteor, METEOR_INTERVAL);
+                const meteors = document.getElementsByClassName('meteor');
+                for (const meteor of meteors) {
+                    meteor.style.animationPlayState = 'running';
+                }
+            }
+        });
 
         // 鼠标互动：点击生成星光
         document.addEventListener('click', (e) => {
