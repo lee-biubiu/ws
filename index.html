@@ -49,16 +49,19 @@
             transform: translate(-50%, -50%);
             font-family: 'Orbitron', sans-serif;
             font-size: 8vw;
-            color: #fff; /* 改为白色主色，与星星颜色统一 */
+            color: #fff;
             background: rgba(0, 0, 0, 0);
             padding: 2vh 4vw;
             border-radius: 12px;
             z-index: 100;
-            text-shadow: 0 0 8px rgba(135, 206, 250, 0.8),  /* 淡蓝色渐变阴影（天空蓝） */
-                         0 0 16px rgba(135, 206, 250, 0.6),
-                         0 0 24px rgba(135, 206, 250, 0.4); /* 多层阴影增强空间感 */
-            min-width: 8ch; /* 锁定最小宽度为8个字符宽度（对应HH:MM:SS格式） */
+            text-shadow: 0 0 8px rgba(135, 206, 250, 0.8),
+                        0 0 16px rgba(135, 206, 250, 0.6),
+                        0 0 24px rgba(135, 206, 250, 0.4);
+            width: 8ch; /* 固定宽度为8个字符宽度（对应HH:MM:SS） */
+            min-width: 8ch; /* 防止内容过宽时收缩 */
             text-align: center;
+            font-variant-numeric: tabular-nums; /* 强制数字等宽显示 */
+            white-space: nowrap; /* 防止换行 */
         }
 
         @keyframes twinkle {
