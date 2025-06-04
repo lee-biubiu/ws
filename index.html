@@ -42,7 +42,6 @@
             animation: meteor 3s linear;
         }
 
-        /* 调整后的数码时钟样式 */
         .digital-clock {
             position: fixed;
             top: 50%;
@@ -58,6 +57,8 @@
             text-shadow: 0 0 8px rgba(135, 206, 250, 0.8),  /* 淡蓝色渐变阴影（天空蓝） */
                          0 0 16px rgba(135, 206, 250, 0.6),
                          0 0 24px rgba(135, 206, 250, 0.4); /* 多层阴影增强空间感 */
+            min-width: 8ch; /* 锁定最小宽度为8个字符宽度（对应HH:MM:SS格式） */
+            text-align: center;
         }
 
         @keyframes twinkle {
