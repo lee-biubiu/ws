@@ -125,25 +125,25 @@
                     startX = Math.random() * 100 + 'vw';
                     startY = Math.random() * 10 + 'vh';
                     endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, 100vh)`;
-                    gradientAngle = 180;  // 渐变方向：下→上（尾迹在上方）
+                    gradientAngle = 0;  // 渐变方向：下→上（尾迹在上方，垂直向上）
                     break;
                 case 'right': // 向左运动（从右侧出发）
                     startX = Math.random() * 10 + 90 + 'vw';
                     startY = Math.random() * 100 + 'vh';
                     endTranslate = `translate(-100vw, ${(Math.random() - 0.5) * 30}vh)`;
-                    gradientAngle = 90;  // 渐变方向：左→右（尾迹在右侧）
+                    gradientAngle = 90;  // 渐变方向：左→右（尾迹在右侧，水平向右）
                     break;
                 case 'bottom': // 向上运动（从底部出发）
                     startX = Math.random() * 100 + 'vw';
                     startY = Math.random() * 10 + 90 + 'vh';
                     endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, -100vh)`;
-                    gradientAngle = 0;  // 渐变方向：上→下（尾迹在下方）
+                    gradientAngle = 180;  // 渐变方向：上→下（尾迹在下方，垂直向下）
                     break;
                 case 'left': // 向右运动（从左侧出发）
                     startX = Math.random() * 10 + 'vw';
                     startY = Math.random() * 100 + 'vh';
                     endTranslate = `translate(100vw, ${(Math.random() - 0.5) * 30}vh)`;
-                    gradientAngle = -90;  // 渐变方向：右→左（尾迹在左侧）
+                    gradientAngle = 270;  // 渐变方向：右→左（尾迹在左侧，水平向左）
                     break;
             }
         
