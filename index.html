@@ -107,7 +107,7 @@
             container.appendChild(star);
         }
 
-        // 生成流星（修复后）
+        // 生成流星（优化后）
         function createMeteor() {
             const meteor = document.createElement('div');
             meteor.className = 'meteor';
@@ -117,51 +117,70 @@
             const direction = directions[Math.floor(Math.random() * directions.length)];
             let startX, startY, endTranslate, gradientAngle;
         
+            // 新增：随机流星尺寸（长度80-150px，宽度1-3px）
+            const meteorWidth = Math.random() * 70 + 80;  // 80-150px随机长度
+            const meteorHeight = Math.random() * 2 + 1;  // 1-3px随机宽度
+        
             // 根据方向计算起始位置、结束偏移量和渐变角度
             switch (direction) {
                 case 'top': 
                     startX = Math.random() * 100 + 'vw';
                     startY = Math.random() * 10 + 'vh';
                     endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, 100vh)`;
-                    gradientAngle = 0; 
+                    gradientAngle = 0;  // 拖影方向向上
                     break;
                 case 'right': 
                     startX = Math.random() * 10 + 90 + 'vw';
                     startY = Math.random() * 100 + 'vh';
                     endTranslate = `translate(-100vw, ${(Math.random() - 0.5) * 30}vh)`;
-                    gradientAngle = -90; 
+                    gradientAngle = -90;  // 拖影方向向右
                     break;
                 case 'bottom': 
                     startX = Math.random() * 100 + 'vw';
                     startY = Math.random() * 10 + 90 + 'vh';
                     endTranslate = `translate(${(Math.random() - 0.5) * 30}vw, -100vh)`;
-                    gradientAngle = 180; 
+                    gradientAngle = 180;  // 拖影方向向下
                     break;
                 case 'left': 
                     startX = Math.random() * 10 + 'vw';
                     startY = Math.random() * 100 + 'vh';
                     endTranslate = `translate(100vw, ${(Math.random() - 0.5) * 30}vh)`;
-                    gradientAngle = 90; 
+                    gradientAngle = 90;  // 拖影方向向左
                     break;
             }
         
-            // 先声明动画名称
-            const animationName = `meteor-${Date.now()}`;  // 调整顺序：先声明animationName
+            const animationName = `meteor-${Date.now()}`;
         
-            // 动态设置流星的样式（包含正确的animationName）
+            // 动态设置流星样式（优化渐变和尺寸）
             meteor.style.cssText = `
                 left: ${startX};
                 top: ${startY};
-                background: linear-gradient(${gradientAngle}deg, #fff, transparent);
-                animation: ${animationName} 3s linear;  // 现在使用已声明的animationName
+                width: ${meteorWidth}px;  // 随机长度
+                height: ${meteorHeight}px;  // 随机宽度
+                background: linear-gradient(${gradientAngle}deg, 
+                    #ffffff 10%,    // 白色核心
+                    #a1e4ff 40%,    // 淡蓝色过渡
+                    transparent 100%  // 透明尾端
+                );
+                animation: ${animationName} 3s linear;
             `;
         
-            // 动态创建专属动画
+            // 优化动画关键帧（增加缩放效果）
             const style = document.createElement('style');
             style.textContent = `
                 @keyframes ${animationName} {
-                    0% { transform: translate(0, 0); opacity: 1; }
-                    100% { transform: ${endTranslate}; opacity: 0; }
+                    0% { 
+                        transform: translate(0, 0) scaleX(1);  // 初始完整尺寸
+                        opacity: 1;
+                    }
+                    70% {
+                        transform: ${endTranslate} scaleX(0.8);  // 中途略微收缩
+                        opacity: 0.7;
+                    }
+                    100% { 
+                        transform: ${endTranslate} scaleX(0.2);  // 末端收缩消失
+                        opacity: 0;
+                    }
                 }
             `;
             document.head.appendChild(style);
